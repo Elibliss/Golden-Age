@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { isValidAddress, isValidPhone } from '../utils';
 
@@ -29,7 +29,7 @@ export default function Checkout(){
     if (c) setCart(JSON.parse(c));
     
     // Check if first-time buyer
-    axios.get('/api/user/is-first-buyer', { headers: { Authorization: 'Bearer ' + token } })
+    api.get('/api/user/is-first-buyer', { headers: { Authorization: 'Bearer ' + token } })
       .then(r => setIsFirstBuyer(r.data?.isFirstBuyer))
       .catch(() => setIsFirstBuyer(false))
       .finally(() => setLoading(false));
@@ -39,7 +39,7 @@ export default function Checkout(){
     const params = new URLSearchParams(location.search);
     const txId = params.get('transaction_id');
     if (txId) {
-      axios.get('/api/pay/flutterwave/verify', { params: { transaction_id: txId } })
+      api.get('/api/pay/flutterwave/verify', { params: { transaction_id: txId } })
         .then(r => { if (r.data && r.data.ok) setIsPaid(true); })
         .catch((err)=>{
           const errorMsg = err.response?.data?.error || 'Payment verification failed';
@@ -86,7 +86,7 @@ export default function Checkout(){
     try{
       const amount = cart.reduce((s,i)=>s + (i.price||0) * (i.qty||1), 0);
       const redirect = window.location.origin + '/checkout';
-      const r = await axios.post('/api/pay/flutterwave', { amount, customer: {}, redirect_url: redirect });
+      const r = await api.post('/api/pay/flutterwave', { amount, customer: {}, redirect_url: redirect });
       if (r.data && r.data.link) {
         window.location.href = r.data.link;
       } else {
@@ -124,7 +124,7 @@ export default function Checkout(){
     try{
       const items = cart.map(i=>({ id:i.id, name:i.name, qty:i.qty, price:i.price }));
       const token = localStorage.getItem('token');
-      const res = await axios.post('/api/orders/finalize', { items, address, phone, lat: loc.lat, lon: loc.lon, paymentMethod: 'pay_now', paymentStatus: 'paid' }, { headers: { Authorization: 'Bearer ' + token } });
+      const res = await api.post('/api/orders/finalize', { items, address, phone, lat: loc.lat, lon: loc.lon, paymentMethod: 'pay_now', paymentStatus: 'paid' }, { headers: { Authorization: 'Bearer ' + token } });
       setStatus(res.data);
       localStorage.removeItem('cart');
     }catch(err){ 

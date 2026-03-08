@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../ConfirmationModal';
 
@@ -32,11 +32,11 @@ export default function Admin(){
     try {
       const headers = { 'x-admin-session': session };
       const [ordersRes, eventsRes, productsRes, statsRes, usersRes] = await Promise.all([
-        axios.get('/api/orders', { headers }),
-        axios.get('/api/events', { headers }),
-        axios.get('/api/products', { headers }),
-        axios.get('/api/admin/stats', { headers }),
-        axios.get('/api/admin/users', { headers })
+        api.get('/api/orders', { headers }),
+        api.get('/api/events', { headers }),
+        api.get('/api/products', { headers }),
+        api.get('/api/admin/stats', { headers }),
+        api.get('/api/admin/users', { headers })
       ]);
       setOrders(ordersRes.data);
       setEvents(eventsRes.data);
@@ -59,7 +59,7 @@ export default function Admin(){
   async function setOrderStatus(id, status){
     try{
       const headers = { 'x-admin-session': session };
-      const r = await axios.post(`/api/orders/${id}/status`, { status }, { headers });
+      const r = await api.post(`/api/orders/${id}/status`, { status }, { headers });
       setOrders(prev => prev.map(o=> o.id===id ? r.data.order : o));
     }catch(err) { console.error(err); }
   }
@@ -68,7 +68,7 @@ export default function Admin(){
     if (!reply.id) return;
     try{
       const headers = { 'x-admin-session': session };
-      await axios.post(`/api/events/${reply.id}/reply`, { message: reply.message, to: reply.to }, { headers });
+      await api.post(`/api/events/${reply.id}/reply`, { message: reply.message, to: reply.to }, { headers });
       setReply({ id:null, to:'', message:'' });
       await fetchData();
     }catch(err) { console.error(err); }
@@ -121,7 +121,7 @@ export default function Admin(){
       fd.append('is_popular', prod.is_popular ? 'true' : 'false');
       if (prodImg) fd.append('image', prodImg);
       const headers = { 'x-admin-session': session };
-      await axios.post('/api/products', fd, { headers });
+      await api.post('/api/products', fd, { headers });
       setProd({ name:'', price:'', description:'', category:'', is_popular:false });
       setProdImg(null);
       setProdMsg('Product added ✓');
@@ -137,7 +137,7 @@ export default function Admin(){
   async function deleteProduct(id){
     try{
       const headers = { 'x-admin-session': session };
-      await axios.delete(`/api/products/${id}`, { headers });
+      await api.delete(`/api/products/${id}`, { headers });
       setProdMsg('Product deleted ✓');
       setTimeout(()=>setProdMsg(''), 2500);
       setDeleteConfirmId(null);

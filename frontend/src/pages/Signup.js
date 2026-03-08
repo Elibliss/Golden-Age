@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidName, isValidPassword } from '../utils';
 
@@ -44,7 +44,7 @@ export default function Signup(){
     
     setLoading(true);
     try{
-      const r = await axios.post('/api/auth/signup', { 
+      const r = await api.post('/api/auth/signup', { 
         email: trimmedEmail, 
         password: form.password, 
         name: trimmedName 

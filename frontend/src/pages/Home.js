@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 
 export default function Home() {
   const [popular, setPopular] = useState([]);
   const [regular, setRegular] = useState([]);
   useEffect(()=>{
-    axios.get('/api/products').then(r=>{
+    api.get('/api/products').then(r=>{
       const arr = Array.isArray(r.data) ? r.data : [];
       setPopular(arr.filter(x=>x.is_popular).slice(0,8));
       setRegular(arr.filter(x=>!x.is_popular).slice(0,8));

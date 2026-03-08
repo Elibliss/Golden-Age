@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 export default function Shop(){
@@ -9,7 +9,7 @@ export default function Shop(){
   const navigate = useNavigate();
 
   useEffect(()=>{
-    axios.get('/api/products').then(r=>setProducts(r.data)).catch(()=>{});
+    api.get('/api/products').then(r=>setProducts(r.data)).catch(()=>{});
   },[]);
 
   function add(p){

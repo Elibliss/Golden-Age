@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail } from '../utils';
 
@@ -31,7 +31,7 @@ export default function Login(){
     
     setLoading(true);
     try{
-      const r = await axios.post('/api/auth/login', { email: form.email.trim(), password: form.password });
+      const r = await api.post('/api/auth/login', { email: form.email.trim(), password: form.password });
       localStorage.setItem('token', r.data.token);
       const to = localStorage.getItem('post_login_redirect') || '/';
       localStorage.removeItem('post_login_redirect');

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { isValidEmail, isValidName, isValidPhone, isValidGuestCount, isValidFutureDate } from '../utils';
 
 export default function Events(){
@@ -65,7 +65,7 @@ export default function Events(){
     
     setLoading(true);
     try{
-      await axios.post('/api/events', {
+      await api.post('/api/events', {
         event_type: form.event_type.trim(),
         guests: parseInt(form.guests),
         event_date: form.event_date,

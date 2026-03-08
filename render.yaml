@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: golden-age-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    healthCheckPath: /api/health
+    plan: free

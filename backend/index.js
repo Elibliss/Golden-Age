@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const streamifier = require('streamifier');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -27,14 +29,24 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '-'))
-});
-const upload = multer({ storage });
-app.use('/uploads', express.static(uploadsDir));
+const useCloudinary = !!process.env.CLOUDINARY_URL;
+if (useCloudinary) {
+  cloudinary.config({ secure: true });
+}
+let upload;
+if (useCloudinary) {
+  const storage = multer.memoryStorage();
+  upload = multer({ storage });
+} else {
+  const uploadsDir = path.join(__dirname, 'uploads');
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadsDir),
+    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '-'))
+  });
+  upload = multer({ storage });
+  app.use('/uploads', express.static(uploadsDir));
+}
 
 // Simple JSON store fallback when PG is not configured
 const dataDir = path.join(__dirname, 'data');
@@ -290,8 +302,27 @@ app.post('/api/products', requireAdmin, upload.single('image'), async (req, res)
     return res.status(400).json({ error: 'Category is required' });
   }
   
-  const image_url = req.file ? `/uploads/${path.basename(req.file.path)}` : null;
-  
+  let image_url = null;
+  if (req.file) {
+    if (useCloudinary) {
+      const uploadStream = () =>
+        new Promise((resolve, reject) => {
+          const s = cloudinary.uploader.upload_stream({ folder: 'golden-age' }, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          });
+          streamifier.createReadStream(req.file.buffer).pipe(s);
+        });
+      try {
+        const result = await uploadStream();
+        image_url = result.secure_url || result.url || null;
+      } catch (e) {
+        return res.status(500).json({ error: 'Image upload failed' });
+      }
+    } else {
+      image_url = `/uploads/${path.basename(req.file.path)}`;
+    }
+  }
   try {
     if (useFS) {
       const items = readJson('products.json', []);
@@ -693,6 +724,10 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
   }
 });
 
-ensureTables().then(() => {
-  app.listen(port, () => console.log(`Server on ${port}`));
-});
+if (require.main === module) {
+  ensureTables().then(() => {
+    app.listen(port, () => console.log(`Server on ${port}`));
+  });
+}
+
+module.exports = app;

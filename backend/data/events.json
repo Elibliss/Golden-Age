@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "event_type": "Wedding",
+    "guests": null,
+    "event_date": "2026-02-20",
+    "name": "Elijah kwerenachi Onyia",
+    "email": "onyiaelijah5@gmail.com",
+    "phone": "09072708412",
+    "notes": "please what is your price and list of what you make",
+    "status": "new",
+    "created_at": "2026-02-14T11:12:04.671Z"
+  },
+  {
+    "id": 2,
+    "event_type": "WEDDING",
+    "guests": 3000,
+    "event_date": "2026-02-04",
+    "name": "Elijah kwerenachi Onyia",
+    "email": "onyiaelijah5@gmail.com",
+    "phone": "09072708412",
+    "notes": "KJDS;KJW;IUahru",
+    "status": "new",
+    "created_at": "2026-02-15T19:53:21.981Z"
+  },
+  {
+    "id": 3,
+    "event_type": "Child dedication",
+    "guests": 100,
+    "event_date": "2026-02-27",
+    "name": "Emmanuel",
+    "email": "ifeanyiisrael430@gmail.com",
+    "phone": "09084912344",
+    "notes": "give me Small chops and corck tail",
+    "status": "new",
+    "created_at": "2026-02-17T08:29:42.617Z"
+  },
+  {
+    "id": 4,
+    "event_type": "house party",
+    "guests": 50,
+    "event_date": "2026-06-23",
+    "name": "prince ",
+    "email": "ifeanyiisrael40@gmail.com",
+    "phone": "09036537791",
+    "notes": "i want the event to get very classy ",
+    "status": "new",
+    "created_at": "2026-02-17T13:59:36.430Z"
+  },
+  {
+    "id": 5,
+    "event_type": "house party",
+    "guests": 50,
+    "event_date": "2026-06-23",
+    "name": "prince ",
+    "email": "ifeanyiisrael40@gmail.com",
+    "phone": "09036537791",
+    "notes": "i want the event to get very classy ",
+    "status": "new",
+    "created_at": "2026-02-17T13:59:41.400Z"
+  },
+  {
+    "id": 6,
+    "event_type": "house party",
+    "guests": 50,
+    "event_date": "2026-06-23",
+    "name": "prince ",
+    "email": "ifeanyiisrael40@gmail.com",
+    "phone": "09036537791",
+    "notes": "i want the event to get very classy ",
+    "status": "new",
+    "created_at": "2026-02-17T13:59:46.032Z"
+  },
+  {
+    "id": 7,
+    "event_type": "house party",
+    "guests": 50,
+    "event_date": "2026-06-23",
+    "name": "prince ",
+    "email": "ifeanyiisrael40@gmail.com",
+    "phone": "09036537791",
+    "notes": "i want the event to get very classy ",
+    "status": "new",
+    "created_at": "2026-02-17T13:59:50.394Z"
+  },
+  {
+    "id": 8,
+    "event_type": "house party",
+    "guests": 50,
+    "event_date": "2026-06-23",
+    "name": "prince ",
+    "email": "ifeanyiisrael40@gmail.com",
+    "phone": "09036537791",
+    "notes": "i want the event to get very classy ",
+    "status": "new",
+    "created_at": "2026-02-17T14:37:52.639Z"
+  },
+  {
+    "id": 9,
+    "event_type": "kjhjhjhjhjhkjh",
+    "guests": 70,
+    "event_date": "2026-02-13",
+    "name": "kghgh",
+    "email": "kggghghghgh@gmail.com",
+    "phone": "09072708422",
+    "notes": "kjgghghjfftdgfcdftrdrdfshfy",
+    "status": "new",
+    "created_at": "2026-02-18T10:18:37.051Z"
+  },
+  {
+    "id": 10,
+    "event_type": "wedding",
+    "guests": 4000,
+    "event_date": "2026-03-13",
+    "name": "Elijah kwerenachi Onyia",
+    "email": "onyiaelijah5@gmail.com",
+    "phone": "09072708412",
+    "notes": "small event for lovers",
+    "status": "new",
+    "created_at": "2026-03-03T01:09:50.497Z"
+  }
+]

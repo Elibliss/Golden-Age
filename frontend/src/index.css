@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+body { @apply bg-gray-50 antialiased font-sans; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center rounded-full font-semibold transition shadow-sm; }
+  .btn-primary { @apply btn bg-accent text-white hover:bg-accent-dark; }
+  .btn-secondary { @apply btn bg-yellow-500 text-black hover:bg-yellow-600; }
+  .btn-outline { @apply btn border border-gray-300 bg-white text-gray-900 hover:bg-gray-50; }
+  .input { @apply border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent; }
+  .textarea { @apply border rounded px-3 py-2 w-full min-h-[100px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent; }
+  .card { @apply bg-white rounded-xl shadow p-4; }
+  .badge { @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium border; }
+  .badge-success { @apply badge bg-green-50 text-green-700 border-green-200; }
+  .badge-warning { @apply badge bg-yellow-50 text-yellow-700 border-yellow-200; }
+  .badge-info { @apply badge bg-blue-50 text-blue-700 border-blue-200; }
+  .badge-gray { @apply badge bg-gray-100 text-gray-700 border-gray-200; }
+  .section-title { @apply text-2xl font-bold; }
+  .container-pro { @apply max-w-7xl mx-auto px-4; }
+  .section-heading { @apply text-3xl md:text-4xl font-extrabold tracking-tight text-center; }
+  .section-sub { @apply text-sm text-gray-600 text-center max-w-2xl mx-auto; }
+  .stat-pill { @apply rounded-2xl border bg-white px-8 py-5 shadow-sm flex items-center justify-center; }
+  .food-card { @apply bg-white rounded-2xl shadow-lg ring-1 ring-gray-100 p-6 transition hover:shadow-xl; }
+  .price-badge { @apply absolute top-3 right-3 text-xs bg-accent text-white rounded-full px-3 py-1; }
+  .order-btn { @apply btn-primary px-5 py-2 rounded-full; }
+  .hero-title { @apply text-5xl md:text-6xl font-extrabold leading-tight tracking-tight; }
+  .hero-sub { @apply mt-2 max-w-xl text-sm md:text-base text-white/90; }
+}
